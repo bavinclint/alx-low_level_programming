@@ -1,29 +1,30 @@
 #include <stdio.h>
 /**
- * main -  prints the first 98 Fibonacci numbers, starting with 1 and 2
+ * main - main function
  *
- * Return: 0 (success)
+ * Return: nothing
  */
 int main(void)
 {
-	unsigned long int f;
-	unsigned long int b = 1;
-	unsigned long int c = 2;
-	int a;
+	int counter = 2;
 
-	printf("%lu, ", b);
-	printf("%lu, ", c);
+	float a = 1;
+	float b = a + 1;
+	float c = a + b;
 
-	for (a = 3; a <= 98; a++)
+	printf("%.0f, ", a);
+	printf("%.0f, ", b);
+	while (counter < 98)
 	{
-		f = b + c;
+		counter++;
+		printf("%.0f", c);
+		a = b;
 		b = c;
-		c = f;
-
-		if (a < 98)
-			printf("%lu, ", f);
-		else
-			printf("%lu", f);
+		c = a + b;
+		if (counter < 98)
+		{
+			printf(", ");
+		}
 	}
 	printf("\n");
 	return (0);
