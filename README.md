@@ -4,4 +4,6 @@ Low Level Programming and Algorithms
 
 Welcome 
 
-Desscription:
+Description:
+
+C - Debugging
