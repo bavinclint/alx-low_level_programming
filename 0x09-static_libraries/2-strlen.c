@@ -1,5 +1,4 @@
 #include "main.h"
-
 /**
  * _strlen - gets character string
  *
@@ -8,9 +7,9 @@
  */
 int _strlen(char *s)
 {
-	int i;
+	int p;
 
-	for (i = 0; s[i] != '\0'; i++)
+	for (p = 0; s[p] != '\0'; p++)
 	{}
-	return (i);
+	return (p);
 }

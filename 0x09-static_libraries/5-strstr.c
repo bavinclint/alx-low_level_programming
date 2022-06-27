@@ -1,10 +1,11 @@
 #include "main.h"
 
 /**
- * _strstr - locates substring
- * @haystack: string to locte
- * @needle: substring to locate
- * Return: returns string at starting sub or null
+ * _strstr - locates a substring
+ * @haystack: pointer to a string
+ * @needle: pointer to a substring
+ *
+ * Return: the addres of the sub in a string
  */
 char *_strstr(char *haystack, char *needle)
 {
@@ -13,20 +14,18 @@ char *_strstr(char *haystack, char *needle)
 
 	if (needle[0] == '\0')
 		return (haystack);
-	
-	for (i = 0; haystack[i] != '\0'; i++)
+	for (j = 0; haystack[j] != '\0'; j++)
 	{
-		if (haystack[i] == needle[0])
+		if (haystack[j] == needle[0])
 		{
-			for (j = 0; needle[j] != '\0'; j++)
+			for (i = 0; needle[i] != '\0'; i++)
 			{
-				if (haystack[i + j] != needle[j])
+				if  (needle[i] != haystack[i + j])
 					break;
 			}
-			if (needle[j] == '\0')
-				return (haystack + i);
+			if (needle[i] == '\0')
+				return (haystack + j);
 		}
-		
 	}
-	return ('\0');
+	return (0);
 }

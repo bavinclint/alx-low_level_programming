@@ -1,30 +1,29 @@
 #include "main.h"
-#include <stdio.h>
 
 /**
- * _strspn - length of prefix substring
- * @s: string to go through
- * @accept: accepted bytes
- * Return: returns usigned values
+ * _strspn - gets the length of a prefix substring
+ * @s: pointer to a string
+ * @accept: pointerb to a substring
+ *
+ * Return: the number of bytes
  */
 unsigned int _strspn(char *s, char *accept)
 {
-	int i;
-	int j;
-	unsigned int result = 0;
+	unsigned int i;
+	unsigned int j;
+	int a = 0;
 
 	for (i = 0; s[i] != '\0'; i++)
 	{
-		for (j = 0; s[j] != '\0'; j++)
+		for (j = 0; accept[j] != '\0'; j++)
 		{
 			if (s[i] == accept[j])
-			{
-				result++;
+			{	a++;
 				break;
 			}
 		}
-		if (s[j] == '\0')
-			return (result);
+		if (accept[j] == '\0')
+			return (a);
 	}
-	return (result);
+	return (a);
 }

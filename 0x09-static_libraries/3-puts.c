@@ -1,18 +1,11 @@
-#include "main.h"
-#include "2-strlen.c"
-
+#include <stdio.h>
 /**
- * _puts - puts a string
+ * main - Entry point
  *
- * @str: string to print
+ * Return: always 0
  */
-void _puts(char *str)
+int main(void)
 {
-	int i;
-
-	for (i = 0; *(str + i) != '\0'; i++)
-	{
-		_putchar(*(str + i));
-	}
-	_putchar('\n');
+	puts("\"Programming is like building a multilingual puzzle");
+	return (0);
 }
