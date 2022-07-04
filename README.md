@@ -1,9 +1,10 @@
-ALX low level programming
+0x0E. C - Structures, typedef
 
-Low Level Programming and Algorithms
+Tasks
+0. Poppy
 
-Welcome 
+Define a new type struct dog with the following elements:
 
-Description:
-
-C - Debugging
+name, type = char *
+age, type = float
+owner, type = char *
