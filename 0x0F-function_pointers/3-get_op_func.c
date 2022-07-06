@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include "function_pointers.h"
 
-
 /**
  * get_op_func - selects the correct function
  * @s: parameter
