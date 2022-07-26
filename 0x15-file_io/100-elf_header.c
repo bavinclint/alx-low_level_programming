@@ -1,5 +1,7 @@
 #define _GNU_SOURCE
-#include <main.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <fcntl.h>
 #include <elf.h>
 /**
  * printclass - prints the class from an elf header
