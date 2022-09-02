@@ -1,4 +1,4 @@
 #!/bin/bash
 git add .
-git commit -m "Insert at index"
+git commit -m "Delete at index"
 git push 
