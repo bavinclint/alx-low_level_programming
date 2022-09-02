@@ -1,4 +1,4 @@
 #!/bin/bash
 git add .
-git commit -m "Delete at index"
+git commit -m "Crackme4"
 git push 
