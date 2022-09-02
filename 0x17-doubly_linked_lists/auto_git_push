@@ -1,4 +1,4 @@
 #!/bin/bash
 git add .
-git commit -m "Get node at index"
+git commit -m "um list"
 git push 
