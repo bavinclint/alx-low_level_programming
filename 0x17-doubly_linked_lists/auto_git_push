@@ -1,4 +1,4 @@
 #!/bin/bash
 git add .
-git commit -m "Add node"
+git commit -m "Add node at the end"
 git push 
