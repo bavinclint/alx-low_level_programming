@@ -1,4 +1,4 @@
 #!/bin/bash
 git add .
-git commit -m "Free list"
+git commit -m "Get node at index"
 git push 
