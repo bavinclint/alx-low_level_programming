@@ -1,4 +1,4 @@
 #!/bin/bash
 git add .
-git commit -m "um list"
+git commit -m "Insert at index"
 git push 
