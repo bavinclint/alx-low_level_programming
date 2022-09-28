@@ -1,4 +1,4 @@
 #!/bin/bash
 git add .
-git commit -m "index of a key"
+git commit -m "element to the hash table."
 git push
