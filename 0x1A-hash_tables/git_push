@@ -1,4 +1,4 @@
 #!/bin/bash
 git add .
-git commit -m "value associated"
+git commit -m "prints a hash table."
 git push
