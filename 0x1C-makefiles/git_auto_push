@@ -1,4 +1,4 @@
 #!/bin/bash
 git add .
-git commit -m "A complete Makefile"
+git commit -m "Island Perimeter"
 git push
