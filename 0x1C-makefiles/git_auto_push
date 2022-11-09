@@ -1,4 +1,4 @@
 #!/bin/bash
 git add .
-git commit -m "makefile"
+git commit -m "curious make file"
 git push
