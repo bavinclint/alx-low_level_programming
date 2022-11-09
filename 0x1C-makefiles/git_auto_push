@@ -1,4 +1,4 @@
 #!/bin/bash
 git add .
-git commit -m "updated make file"
+git commit -m "A complete Makefile"
 git push
