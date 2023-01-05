@@ -1,4 +1,4 @@
 #!/bin/bash
 git add .
-git commit -m 'iterative linear search'
+git commit -m 'Jump search'
 git push
