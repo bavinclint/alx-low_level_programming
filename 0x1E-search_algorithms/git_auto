@@ -1,4 +1,4 @@
 #!/bin/bash
 git add .
-git commit -m 'binary search'
+git commit -m 'iterative linear search'
 git push
