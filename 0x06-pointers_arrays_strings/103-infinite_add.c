@@ -1,125 +1,64 @@
 #include "main.h"
-
 /**
- * _strlen - returns the length of a string
- *
- * @s: char pointer
- *
- * Return: Size of the string
- */
-int _strlen(char *s)
-{
-	int size = 0;
-
-	while (*s != '\0')
-	{
-		size++;
-		s++;
-	}
-
-	return (size);
-}
-
-/**
- * isDigit - check if a character is a digit
- *
- * @c: character
- *
- * Return: true if successful
- */
-int isDigit(char c)
-{
-	return (c >= '0' && c <= '9');
-}
-
-/**
- * getCharN - get character at N position
- *
- * @c: character
- * @n: position
- *
- * Return: character
- */
-char getCharN(char *c, int n)
-{
-	int size = _strlen(c);
-	char ch = (size >= n) ? (c[size - 1 - n]) : '0';
-
-	return (isDigit(ch) ? ch : '0');
-}
-
-/**
- * addChar - add char digit
- *
- * @c1: character
- * @c2: position
- *
- * Return: number
- */
-int addChar(char c1, char c2)
-{
-	return ((c1 - 48) + (c2 - 48));
-}
-
-/**
- * infinite_add - add two char number
- *
- * @n1: character number
- * @n2: char number
+ * string_add - adds two numbers
+ * @n1: string containing first number
+ * @n2: string containing second number
  * @r: buffer
- * @size_r: size of the buffer
- *
- * Return: result
+ * @r_index: buffer index
+ * Return: pointer to the result
+ */
+char *string_add(char *n1, char *n2, char *r, int r_index)
+{
+	int num, tens = 0;
+
+	for (; *n1 && *n2; n1--, n2--, r_index--)
+	{
+		num = (*n1 - '0') + (*n2 - '0');
+		num += tens;
+		*(r + r_index) = (num % 10) + '0';
+		tens = num / 10;
+	}
+	for (; *n1; n1--, r_index--)
+	{
+		num = (*n1 - '0') + tens;
+		*(r + r_index) = (num % 10) + '0';
+		tens = num / 10;
+	}
+	for (; *n2; n2--, r_index--)
+	{
+		num = (*n2 - '0') + tens;
+		*(r + r_index) = (num % 10) + '0';
+		tens = num / 10;
+	}
+	if (tens && r_index >= 0)
+	{
+		*(r + r_index) = (tens % 10) + '0';
+		return (r + r_index);
+	}
+	else if (tens && r_index < 0)
+		return (0);
+	return (r + r_index + 1);
+}
+/**
+ * infinite_add - adds two numbers
+ * @n1: first number
+ * @n2: second number
+ * @r: buffer
+ * @size_r: buffer size
+ * Return: pointer to the result or 0
  */
 char *infinite_add(char *n1, char *n2, char *r, int size_r)
 {
-	int cLoop, rcLoop, result, next = 0;
-	char temp[size_r], c1, c2;
+	int i, len1 = 0, len2 = 0;
 
-	for (cLoop = 0; cLoop < size_r; cLoop++)
-	{
-		temp[cLoop] = '\0';
-		r[cLoop] = '\0';
-	}
-
-	for (cLoop = 0; cLoop < size_r; cLoop++)
-	{
-		c1 = getCharN(n1, cLoop);
-		c2 = getCharN(n2, cLoop);
-
-		result = (((temp[cLoop] == '\0') ? '0' : temp[cLoop]) - 48);
-		result += addChar(c1, c2);
-
-		temp[cLoop] = (result % 10) + 48;
-
-		if (result > 9)
-		{
-			temp[cLoop + 1] = (result / 10) + '0';
-		}
-	}
-
-	rcLoop = size_r - 1;
-	for (cLoop = 0; cLoop < (size_r + 1) / 2; cLoop++)
-	{
-		if (temp[rcLoop - cLoop] == '0' && next == 0)
-		{
-			rcLoop--;
-			cLoop--;
-			continue;
-		}
-		else
-		{
-			next = 1;
-			c1 = temp[cLoop];
-			r[cLoop] = temp[rcLoop - cLoop];
-			r[rcLoop - cLoop] = c1;
-		}
-	}
-
-	if (r[size_r - 1] != '\0')
-	{
+	for (i = 0; *(n1 + i); i++)
+		len1++;
+	for (i = 0; *(n2 + i); i++)
+		len2++;
+	if (size_r <= len1 + 1 || size_r <= len2 + 1)
 		return (0);
-	}
-
-	return (r);
+	n1 += len1 - 1;
+	n2 += len2 - 1;
+	*(r + size_r) = '\0';
+	return (string_add(n1, n2, r, --size_r));
 }
