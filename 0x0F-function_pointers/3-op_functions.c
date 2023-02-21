@@ -1,69 +1,64 @@
-#include "function_pointers.h"
-#include "3-calc.h"
-#include <stdlib.h>
-#include <stdio.h>
 /**
- * op_add - sum
- * @a: first parameter
- * @b: second parameter
+ * op_add - sum of integers
  *
- * Return: the sum
+ * @a: first number
+ * @b: second number
+ *
+ * Return: result
  */
 int op_add(int a, int b)
 {
 	return (a + b);
 }
+
 /**
- * op_sub - sub
- * @a: first parameter
- * @b: second parameter
+ * op_sub - difference of integers
  *
- * Return: returns the differece
+ * @a: first number
+ * @b: second number
+ *
+ * Return: result
  */
 int op_sub(int a, int b)
 {
 	return (a - b);
 }
+
 /**
- * op_mul - mul
- * @a: first parameter
- * @b: second parameter
+ * op_mul - multiplication of integers
  *
- * Return: the multiplication
+ * @a: first number
+ * @b: second number
+ *
+ * Return: result
  */
 int op_mul(int a, int b)
 {
 	return (a * b);
 }
+
 /**
- * op_div - div
- * @a: first parameter
- * @b: second parameter
+ * op_div - division of integers
  *
- * Return: the division
+ * @a: first number
+ * @b: second number
+ *
+ * Return: result
  */
 int op_div(int a, int b)
 {
-	if (b == 0)
-	{
-		printf("Error\n");
-		exit(100);
-	}
 	return (a / b);
 }
+
 /**
- * op_mod - mod
- * @a: first parameter
- * @b: second parameter
+ * op_mod - remainder of division of integers
  *
- * Return: the modulus
+ * @a: first number
+ * @b: second number
+ *
+ * Return: result
  */
 int op_mod(int a, int b)
 {
-	if (b == 0)
-	{
-		printf("Error\n");
-		exit(100);
-	}
 	return (a % b);
 }
