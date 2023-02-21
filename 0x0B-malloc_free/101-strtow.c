@@ -1,155 +1,102 @@
-#include <stddef.h>
+#include "main.h"
 #include <stdlib.h>
 
-/**
- * _strlen - returns the length of a string
- *
- * @s: char pointer
- *
- * Return: Size of the string
- */
-int _strlen(char *s)
-{
-	int size = 0;
+int str_len(char *str);
+int wordCount(char *str);
+char **strtow(char *str);
 
-	while (*s != '\0')
+/**
+ * str_len - Locates the index marking the end of the
+ *            first word contained within a string.
+ * @str: The string to be searched.
+ *
+ * Return: The index marking the end of the initial word pointed to by str.
+ */
+int str_len(char *str)
+{
+	int i = 0, length = 0;
+
+	while (*(str + i) && *(str + i) != ' ')
 	{
-		size++;
-		s++;
+		length++;
+		i++;
 	}
 
-	return (size);
+	return (length);
 }
 
 /**
- * characterNumber - returns character number
+ * wordCount - Counts the number of words contained within a string.
+ * @str: The string to be searched.
  *
- * @str: char pointer
- *
- * Return: Size of the string
+ * Return: The number of words contained within str.
  */
-int characterNumber(char *str)
+int wordCount(char *str)
 {
-	if (*str != '\0')
+	int i = 0, words = 0, length = 0;
+
+	for (i = 0; *(str + i); i++)
+		length++;
+
+	for (i = 0; i < length; i++)
 	{
-		if (*str != ' ')
+		if (*(str + i) != ' ')
 		{
-			return ((characterNumber(str + 1)) + 1);
-		}
-		else
-		{
-			return (characterNumber(str + 1));
+			words++;
+			i += str_len(str + i);
 		}
 	}
-	else
-	{
-		return (0);
-	}
+
+	return (words);
 }
 
 /**
- * wordNumber - returns word number
+ * strtow - Splits a string into words.
+ * @str: The string to be split.
  *
- * @str: char pointer
- *
- * Return: Word number
- */
-int wordNumber(char *str)
-{
-	if (*str != '\0')
-	{
-		if (*str != ' ' && *(str + 1) == ' ')
-		{
-			return ((wordNumber(str + 1)) + 1);
-		}
-		else
-		{
-			return (wordNumber(str + 1));
-		}
-	}
-	else
-	{
-		return (0);
-	}
-}
-
-/**
- * getWord - returns word
- *
- * @prmGlobal: char pointer
- * @prmOffset: start of the word
- * @prmSize: length of the word
- *
- * Return: Word number
- */
-char *getWord(char *prmGlobal, int prmOffset, int prmSize)
-{
-	char *word;
-	int cLoop;
-
-	word = malloc(sizeof(char) * prmSize + 1);
-
-	if (word == NULL)
-	{
-		return (NULL);
-	}
-
-	for (cLoop = 0; cLoop < (prmSize); cLoop++)
-	{
-		word[cLoop] = prmGlobal[prmOffset + cLoop];
-	}
-
-	word[cLoop] = '\0';
-
-	return (word);
-}
-
-/**
- * strtow - splits a string into words
- *
- * @str: char pointer
- *
- * Return: word array
+ * Return: If str = NULL, str = "", or the function fails - NULL.
+ *         Otherwise - a pointer to an array of strings (words).
  */
 char **strtow(char *str)
 {
-	int cLoop = 0, cLoop1 = 0, size, wordSize, word_number;
-	char *word;
-	char **words;
+	char **strings;
+	int i = 0, words, word, letters, letter;
 
-	size = _strlen(str);
-	word_number = wordNumber(str);
-
-	if (str == NULL || !str || word_number == 0)
-	{
+	if (str == NULL || str[0] == '\0')
 		return (NULL);
-	}
 
-	words = malloc(sizeof(char *) * (word_number + 1));
-
-	if (words == NULL)
-	{
+	words = wordCount(str);
+	if (words == 0)
 		return (NULL);
-	}
 
-	for (cLoop = 0; cLoop < size && cLoop1 < word_number; cLoop++)
+	strings = malloc(sizeof(char *) * (words + 1));
+	if (strings == NULL)
+		return (NULL);
+
+	for (word = 0; word < words; word++)
 	{
-		if (str[cLoop] != ' ')
-		{
-			wordSize++;
-		}
-		else
-		{
-			if (wordSize > 0)
-			{
-				word = getWord(str, cLoop - wordSize, wordSize);
-				words[cLoop1] = word;
-				wordSize = 0;
-				cLoop1++;
-			}
-		}
-	}
-	words[cLoop1] = 0;
+		while (str[i] == ' ')
+			i++;
 
-	return (words);
+		letters = str_len(str + i);
+
+		strings[word] = malloc(sizeof(char) * (letters + 1));
+
+		if (strings[word] == NULL)
+		{
+			for (; word >= 0; word--)
+				free(strings[word]);
+
+			free(strings);
+			return (NULL);
+		}
+
+		for (letter = 0; letter < letters; letter++)
+			strings[word][letter] = str[i++];
+
+		strings[word][letter] = '\0';
+	}
+	strings[word] = NULL;
+
+	return (strings);
 }
