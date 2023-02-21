@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
-#include <main.h>
+
 
 /**
  * _isNull - check if string is nullable
