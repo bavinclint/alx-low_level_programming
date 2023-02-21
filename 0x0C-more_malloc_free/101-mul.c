@@ -1,250 +1,232 @@
-#include <stdio.h>
 #include <stdlib.h>
-#include <ctype.h>
+#include "main.h"
+#include <stdio.h>
+
+int str_len(char *str);
+char *create_array(int size);
+char *iterate_zeroes(char *str);
+void get_prod(char *prod, char *mult, int digit, int zeroes);
+void add_nums(char *final_prod, char *next_prod, int next_len);
 
 /**
- * _isNull - check if string is nullable
+ * str_len - Finds the length of a string.
+ * @str: The string to be measured.
  *
- * @s: string to verify
- *
- * Return: 1 if string is null.
+ * Return: The length of the string.
  */
-int _isNull(char *s)
+int str_len(char *str)
 {
-	if (*s == '\0')
-	{
-		return (1);
-	}
-	if (*s != '0')
-	{
-		return (0);
-	}
-	else
-	{
-		return (_isNull(s + 1));
-	}
+	int length = 0;
+
+	while (*str++)
+		length++;
+
+	return (length);
 }
 
 /**
- * _isNumber - check if string is a number
+ * create_array - Creates an array of chars and initializes it with
+ *                 the character 'x'. Adds a terminating null byte.
+ * @size: The size of the array to be initialized.
  *
- * @s: string to verify
- *
- * Return: 1 if string is a number.
+ * Description: If there is insufficient space, the
+ *              function exits with a status of 98.
+ * Return: A pointer to the array.
  */
-int _isNumber(char *s)
+char *create_array(int size)
 {
-	if (*s == '\0')
-	{
-		return (1);
-	}
-	if (!isdigit(*s))
-	{
-		return (0);
-	}
-	else
-	{
-		return (_isNumber(s + 1));
-	}
+	char *arr;
+	int i;
+
+	arr = malloc(sizeof(char) * size);
+
+	if (arr == NULL)
+		exit(98);
+
+	for (i = 0; i < (size - 1); i++)
+		arr[i] = 'x';
+
+	arr[i] = '\0';
+
+	return (arr);
 }
 
 /**
- * _strlen_recursion - return the length of a string
+ * iterate_zeroes - Iterates through a string of numbers containing
+ *                  leading zeroes until it hits a non-zero number.
+ * @str: The string of numbers to be iterate through.
  *
- * @s: char pointer
- *
- * Return: the length of a string
+ * Return: A pointer to the next non-zero element.
  */
-int _strlen_recursion(char *s)
+char *iterate_zeroes(char *str)
 {
-	if (*s != '\0')
-	{
-		return (_strlen_recursion(s + 1) + 1);
-	}
-	else
-	{
-		return (0);
-	}
+	while (*str && *str == '0')
+		str++;
+
+	return (str);
 }
 
 /**
- * _memset - fills the first n bytes of the memory area pointed to by s
- *           with the constant byte b
+ * get_digit - Converts a digit character to a corresponding int.
+ * @c: The character to be converted.
  *
- * @s: pointer to memory area
- * @b: constant
- * @n: number ot bytes to fill
- *
- * Return: write n bytes of value b
+ * Description: If c is a non-digit, the function
+ *              exits with a status of 98.
+ * Return: The converted int.
  */
-int *_memset(int *s, int b, unsigned int n)
+int get_digit(char c)
 {
-	unsigned int cLoop;
+	int digit = c - '0';
 
-	for (cLoop = 0; cLoop < n; cLoop++)
-	{
-		s[cLoop] = b;
-	}
-
-	return (s);
-}
-
-/**
- * _intermediate_multiply - multiplication by the number 2
- *
- * @prmResult: array of the current result
- * @prmCLoop: current index loop of the number 1
- * @prmDigit: current digit to multiply
- * @prmNum: Number 2 to multiply
- *
- * Return: integer number
- */
-int *_intermediate_multiply(
-	int *prmResult,
-	int prmCLoop,
-	int prmDigit,
-	char *prmNum
-) {
-	int carry = 0, cLoop2 = 0, size = _strlen_recursion(prmNum), indexNumber;
-	int digit, sum = 0;
-
-	for (indexNumber = size - 1; indexNumber >= 0; indexNumber--)
-	{
-		digit = prmNum[indexNumber] - 48;
-		sum = prmDigit * digit + prmResult[prmCLoop + cLoop2] + carry;
-		carry = sum / 10;
-		prmResult[prmCLoop + cLoop2] = sum % 10;
-		cLoop2++;
-	}
-
-	if (carry > 0)
-	{
-		prmResult[prmCLoop + cLoop2] += carry;
-	}
-
-	return (prmResult);
-}
-
-/**
- * _revInt - create a reverted array of the result
- *
- * @prmNum: array result
- * @prmSize: size of the result
- *
- * Return: character array
- */
-char *_revInt(int *prmNum, int prmSize)
-{
-	int digit, indexNumber1, indexNumber2;
-	char *s;
-
-	indexNumber1 = prmSize - 1;
-	s = malloc(sizeof(char) * (prmSize + 1));
-
-	for (indexNumber2 = 0; indexNumber2 < prmSize; indexNumber2++)
-	{
-		digit = prmNum[indexNumber1 - indexNumber2];
-		s[indexNumber2] = digit + 48;
-	}
-
-	s[prmSize] = '\0';
-
-	return (s);
-}
-
-/**
- * _multiply - multiplies two positive numbers.
- *
- * @prmNum1: char number 1
- * @prmNum2: char number 2
- *
- * Return: result.
- */
-char *_multiply(char *prmNum1, char *prmNum2)
-{
-	int size1 = _strlen_recursion(prmNum1);
-	int size2 = _strlen_recursion(prmNum2);
-	int size = size1 + size2;
-	int *result = malloc(sizeof(int) * size);
-	int cLoop1 = 0, indexNumber1, digit1;
-	char *s;
-
-	if (result == NULL)
-	{
-		return (NULL);
-	}
-
-	if (size1 == 0 || size2 == 0)
-	{
-		return (NULL);
-	}
-
-	result = _memset(result, 0, size1 + size2);
-
-	for (indexNumber1 = size1 - 1; indexNumber1 >= 0; indexNumber1--)
-	{
-		digit1 = prmNum1[indexNumber1] - 48;
-
-		result = _intermediate_multiply(result, cLoop1, digit1, prmNum2);
-
-		cLoop1++;
-	}
-
-	for (
-		indexNumber1 = size - 1;
-		indexNumber1 >= 0 && result[indexNumber1] == 0;
-		indexNumber1--
-	) {
-		if (result[indexNumber1] != 0)
-			break;
-	}
-
-	if (indexNumber1 == -1)
-	{
-		return (NULL);
-	}
-
-	size = indexNumber1 + 1;
-
-	s = _revInt(result, indexNumber1 + 1);
-
-	return (s);
-}
-
-/**
- * main - check the code for Holberton School students.
- *
- * @argc: number of arguments
- * @argv: argument's array
- *
- * Return: Always 0.
- */
-int main(int argc, char *argv[])
-{
-	int cLoop, hasNullableArgument;
-
-	if (argc != 3)
+	if (digit < 0 || digit > 9)
 	{
 		printf("Error\n");
-		return (98);
+		exit(98);
 	}
 
-	for (cLoop = 1; cLoop < argc; cLoop++)
+	return (digit);
+}
+
+/**
+ * get_prod - Multiplies a string of numbers by a single digit.
+ * @prod: The buffer to store the result.
+ * @mult: The string of numbers.
+ * @digit: The single digit.
+ * @zeroes: The necessary number of leading zeroes.
+ *
+ * Description: If mult contains a non-digit, the function
+ *              exits with a status value of 98.
+ */
+void get_prod(char *prod, char *mult, int digit, int zeroes)
+{
+	int mult_len, num, tens = 0;
+
+	mult_len = str_len(mult) - 1;
+	mult += mult_len;
+
+	while (*prod)
 	{
-		if (!_isNumber(argv[cLoop]))
+		*prod = 'x';
+		prod++;
+	}
+
+	prod--;
+
+	while (zeroes--)
+	{
+		*prod = '0';
+		prod--;
+	}
+
+	for (; mult_len >= 0; mult_len--, mult--, prod--)
+	{
+		if (*mult < '0' || *mult > '9')
 		{
 			printf("Error\n");
 			exit(98);
 		}
 
-		if (!hasNullableArgument && _isNull(argv[cLoop]))
-			hasNullableArgument = 1;
+		num = (*mult - '0') * digit;
+		num += tens;
+		*prod = (num % 10) + '0';
+		tens = num / 10;
 	}
 
-	if (hasNullableArgument)
-		printf("%s\n", "0");
-	else
-		printf("%s\n", _multiply(argv[1], argv[2]));
+	if (tens)
+		*prod = (tens % 10) + '0';
+}
+
+/**
+ * add_nums - Adds the numbers stored in two strings.
+ * @final_prod: The buffer storing the running final product.
+ * @next_prod: The next product to be added.
+ * @next_len: The length of next_prod.
+ */
+void add_nums(char *final_prod, char *next_prod, int next_len)
+{
+	int num, tens = 0;
+
+	while (*(final_prod + 1))
+		final_prod++;
+
+	while (*(next_prod + 1))
+		next_prod++;
+
+	for (; *final_prod != 'x'; final_prod--)
+	{
+		num = (*final_prod - '0') + (*next_prod - '0');
+		num += tens;
+		*final_prod = (num % 10) + '0';
+		tens = num / 10;
+
+		next_prod--;
+		next_len--;
+	}
+
+	for (; next_len >= 0 && *next_prod != 'x'; next_len--)
+	{
+		num = (*next_prod - '0');
+		num += tens;
+		*final_prod = (num % 10) + '0';
+		tens = num / 10;
+
+		final_prod--;
+		next_prod--;
+	}
+
+	if (tens)
+		*final_prod = (tens % 10) + '0';
+}
+
+/**
+ * main - Multiplies two positive numbers.
+ * @argv: The number of arguments passed to the program.
+ * @argc: An array of pointers to the arguments.
+ *
+ * Description: If the number of arguments is incorrect or one number
+ *              contains non-digits, the function exits with a status of 98.
+ * Return: Always 0.
+ */
+int main(int argc, char *argv[])
+{
+	char *final_prod, *next_prod;
+	int size, i, digit, zeroes = 0;
+
+	if (argc != 3)
+	{
+		printf("Error\n");
+		exit(98);
+	}
+
+	if (*(argv[1]) == '0')
+		argv[1] = iterate_zeroes(argv[1]);
+	if (*(argv[2]) == '0')
+		argv[2] = iterate_zeroes(argv[2]);
+	if (*(argv[1]) == '\0' || *(argv[2]) == '\0')
+	{
+		printf("0\n");
+		return (0);
+	}
+
+	size = str_len(argv[1]) + str_len(argv[2]);
+	final_prod = create_array(size + 1);
+	next_prod = create_array(size + 1);
+
+	for (i = str_len(argv[2]) - 1; i >= 0; i--)
+	{
+		digit = get_digit(*(argv[2] + i));
+		get_prod(next_prod, argv[1], digit, zeroes++);
+		add_nums(final_prod, next_prod, size - 1);
+	}
+	for (i = 0; final_prod[i]; i++)
+	{
+		if (final_prod[i] != 'x')
+			putchar(final_prod[i]);
+	}
+	putchar('\n');
+
+	free(next_prod);
+	free(final_prod);
 
 	return (0);
 }
