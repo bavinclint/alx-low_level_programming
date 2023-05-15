@@ -1,10 +1,5 @@
-0x0E. C - Structures, typedef
+# Low-level programming & Algorithm - Hatching out
 
-Tasks
-0. Poppy
+## C - Hello World
 
-Define a new type struct dog with the following elements:
-
-name, type = char *
-age, type = float
-owner, type = char *
+[a link](https://github.com/bavinclint/alx-low_level_programming/tree/master/0x00-hello_world)
