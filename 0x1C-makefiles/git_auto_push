@@ -1,4 +1,4 @@
 #!/bin/bash
 git add .
-git commit -m "Island Perimeter"
+git commit -m 'updated readme'
 git push
