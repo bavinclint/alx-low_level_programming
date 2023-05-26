@@ -1,4 +1,3 @@
-#!/bin/bash
-git add .
-git commit -m 'updated readme'
-git push
+# Low-level programming & Algorithm - Hatching out
+
+This repository contain an introduction to learning C programming language. 
